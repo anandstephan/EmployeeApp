@@ -45,7 +45,7 @@ const Profile = (props) =>{
         <View style={{alignItems:"center"}}>
         <Image
         style={{width:140,height:140,borderRadius:70,marginTop:-50}}
-        source={{uri:"https://images.unsplash.com/photo-1559872553-c2607bb6259f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=751&q=80"}}
+        source={{uri:item.picture}}
         />
         </View>
         <View style={{alignItems:"center",margin:15}}>

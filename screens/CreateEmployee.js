@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, Modal, View, Alert } from 'react-native';
+import { StyleSheet, Text, Modal, View, Alert, KeyboardAvoidingView } from 'react-native';
 import { TextInput,Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -36,9 +36,10 @@ const CreateEmployee = ({navigation,route}) =>{
      const [salary,setSalary] = useState(getDetails("salary"))
      const [picture,setPicture] = useState(getDetails("picture"))
      const [position,setPosition] = useState(getDetails("position"));
-    const [modal,setModal] = useState("");
+     const [modal,setModal] = useState("");
+     const [enableShift,setEnableShift] = useState(false);
 
-    const pickFromGallery = async () =>{
+     const pickFromGallery = async () =>{
         const {granted} = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     
         if(granted){
@@ -154,11 +155,13 @@ const CreateEmployee = ({navigation,route}) =>{
 
 
     return (
-        <View style={styles.root}>
+        <KeyboardAvoidingView behavior="position" style={styles.root} enabled={enableShift} >
+        <View>
             <TextInput
             label="Name"
             style={styles.inputStyle}
             value={name}
+            onFocus={()=>setEnableShift(false)}
             mode="outlined"
             onChangeText={text => setName(text)}
             />
@@ -166,6 +169,7 @@ const CreateEmployee = ({navigation,route}) =>{
             label="Email"
             style={styles.inputStyle}
             value={email}
+            onFocus={()=>setEnableShift(false)}
             mode="outlined"
             onChangeText={text => setEmail(text)}
             />
@@ -175,6 +179,7 @@ const CreateEmployee = ({navigation,route}) =>{
             value={phone}
             mode="outlined"
             keyboardType="number-pad"
+            onFocus={()=>setEnableShift(false)}
             onChangeText={text => setPhone(text)}
             />
          <TextInput
@@ -182,6 +187,7 @@ const CreateEmployee = ({navigation,route}) =>{
             style={styles.inputStyle}
             value={salary}
             mode="outlined"
+            onFocus={()=>setEnableShift(false)} 
             keyboardType="decimal-pad"
             onChangeText={text => setSalary(text)}
             />
@@ -190,6 +196,7 @@ const CreateEmployee = ({navigation,route}) =>{
             style={styles.inputStyle}
             value={position}
             mode="outlined"
+            onFocus={()=>setEnableShift(true)}
             onChangeText={text => setPosition(text)}
             />
             <Button 
@@ -212,7 +219,6 @@ const CreateEmployee = ({navigation,route}) =>{
              style={styles.inputStyle}
              icon="content-save"
               mode="contained" 
-              theme={theme}
               onPress={() => submitData()}>
                    save
              </Button>
@@ -244,7 +250,7 @@ const CreateEmployee = ({navigation,route}) =>{
             </View>
         </Modal>
          </View>
-
+         </KeyboardAvoidingView>
     );
 
 }
